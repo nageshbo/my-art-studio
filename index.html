@@ -5,13 +5,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Little Picasso Art Studio</title>
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GDB62G62HR"></script>
+    <!-- Google Analytics (consent-gated: loads only after visitor accepts) -->
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-GDB62G62HR');
+        function loadGoogleAnalytics() {
+            if (window.__gaLoaded) return;
+            window.__gaLoaded = true;
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-GDB62G62HR';
+            document.head.appendChild(s);
+            gtag('js', new Date());
+            gtag('config', 'G-GDB62G62HR');
+        }
+        try {
+            if (localStorage.getItem('cookieConsent') === 'granted') loadGoogleAnalytics();
+        } catch (e) {}
     </script>
     <meta name="description"
         content="The Little Picasso Art Studio - Fun art classes for children aged 4-10 in Graham Park, Colindale, London. Watercolour, acrylic and mixed media painting. Small groups. Book now!" />
@@ -1406,6 +1416,41 @@
 </script>
 <!-- Vercel Web Analytics (cookieless) -->
 <script defer src="/_vercel/insights/script.js"></script>
+<!-- Cookie consent banner (gates Google Analytics) -->
+<style>
+    #cookie-consent{position:fixed;left:16px;right:16px;bottom:16px;z-index:9999;max-width:520px;margin:0 auto;background:#fff;color:#333;border:1px solid #e5e5e5;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.15);padding:16px 18px;font-family:inherit;font-size:14px;line-height:1.5}
+    #cookie-consent p{margin:0 0 12px}
+    #cookie-consent a{color:#c2410c}
+    #cookie-consent .cc-btns{display:flex;gap:10px;justify-content:flex-end}
+    #cookie-consent button{cursor:pointer;border:0;border-radius:8px;padding:8px 16px;font-size:14px;font-weight:600}
+    #cc-accept{background:#c2410c;color:#fff}
+    #cc-decline{background:#f0f0f0;color:#333}
+    @media(max-width:480px){#cookie-consent .cc-btns{flex-direction:column}#cookie-consent button{width:100%}}
+</style>
+<div id="cookie-consent" role="dialog" aria-live="polite" aria-label="Cookie consent" hidden>
+    <p>We use one Google Analytics cookie to understand how visitors use the site. Basic visitor counts are always collected without cookies. Is that okay?</p>
+    <div class="cc-btns">
+        <button id="cc-decline" type="button">Decline</button>
+        <button id="cc-accept" type="button">Accept</button>
+    </div>
+</div>
+<script>
+    (function () {
+        var banner = document.getElementById('cookie-consent');
+        var choice = null;
+        try { choice = localStorage.getItem('cookieConsent'); } catch (e) {}
+        if (!choice) { banner.hidden = false; }
+        document.getElementById('cc-accept').addEventListener('click', function () {
+            try { localStorage.setItem('cookieConsent', 'granted'); } catch (e) {}
+            banner.hidden = true;
+            if (typeof loadGoogleAnalytics === 'function') loadGoogleAnalytics();
+        });
+        document.getElementById('cc-decline').addEventListener('click', function () {
+            try { localStorage.setItem('cookieConsent', 'denied'); } catch (e) {}
+            banner.hidden = true;
+        });
+    })();
+</script>
 </body>
 
 </html>
