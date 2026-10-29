@@ -972,6 +972,372 @@
             }
         }
     </style>
+    <!-- ================= Liquid Glass design system (visual layer only) ================= -->
+    <style id="liquid-glass">
+        :root {
+            --lg-pearl: #f7f6fb;
+            --lg-silver: #eceef4;
+            --lg-lavender: #e6e0f7;
+            --lg-blue: #e1ecf9;
+            --lg-violet: #cfc5ee;
+            --lg-champagne: #f5eadb;
+            --lg-ink: #1d1b26;
+            --lg-ink-soft: #4d4a5c;
+            --lg-focus: rgba(110, 88, 220, .55);
+
+            --lg-fill: linear-gradient(155deg, rgba(255, 255, 255, .78) 0%, rgba(255, 255, 255, .56) 45%, rgba(255, 255, 255, .64) 100%);
+            --lg-fill-strong: linear-gradient(155deg, rgba(255, 255, 255, .9) 0%, rgba(255, 255, 255, .74) 100%);
+            --lg-edge: rgba(255, 255, 255, .7);
+            --lg-edge-soft: rgba(120, 110, 160, .14);
+            --lg-blur: blur(24px) saturate(170%);
+            --lg-shadow: 0 1px 1px rgba(40, 30, 80, .04), 0 10px 30px -8px rgba(60, 45, 120, .16);
+            --lg-shadow-hover: 0 2px 2px rgba(40, 30, 80, .05), 0 22px 44px -12px rgba(60, 45, 120, .24);
+            --lg-inner: inset 0 1px 0 rgba(255, 255, 255, .95), inset 0 -1px 0 rgba(255, 255, 255, .35), inset 0 0 0 1px rgba(255, 255, 255, .25);
+            --lg-radius: 24px;
+            --lg-ease: cubic-bezier(.2, .8, .2, 1);
+        }
+
+        /* ---------- Atmospheric background (soft mesh, slow drift) ---------- */
+        html { background: var(--lg-pearl); }
+        body { background: transparent; color: var(--lg-ink); }
+        body::before {
+            content: ''; position: fixed; inset: -12%; z-index: -2; pointer-events: none;
+            background:
+                radial-gradient(38% 34% at 14% 18%, rgba(207, 197, 238, .75) 0%, transparent 70%),
+                radial-gradient(34% 30% at 86% 14%, rgba(225, 236, 249, .95) 0%, transparent 70%),
+                radial-gradient(40% 36% at 78% 72%, rgba(230, 224, 247, .8) 0%, transparent 72%),
+                radial-gradient(36% 32% at 20% 82%, rgba(245, 234, 219, .9) 0%, transparent 70%),
+                radial-gradient(30% 26% at 50% 48%, rgba(236, 238, 244, .9) 0%, transparent 70%),
+                var(--lg-pearl);
+            animation: lg-drift 48s ease-in-out infinite alternate;
+            will-change: transform;
+        }
+        body::after {
+            /* very fine grain so the gradients never band */
+            content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .035;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        @keyframes lg-drift {
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            50% { transform: translate3d(2.5%, -2%, 0) scale(1.04); }
+            100% { transform: translate3d(-2%, 2.5%, 0) scale(1.02); }
+        }
+
+        /* Light sections float on the atmosphere instead of solid fills */
+        .hero, .about, .gallery, .classes, .testimonials, .contact { background: transparent; }
+
+        /* ---------- Reusable glass material ---------- */
+        .liquid-glass,
+        .class-card, .testimonial-card, .event-card, .classes-notice, .stat, .contact-form {
+            position: relative;
+            background: var(--lg-fill);
+            -webkit-backdrop-filter: var(--lg-blur);
+            backdrop-filter: var(--lg-blur);
+            border: 1px solid var(--lg-edge);
+            border-radius: var(--lg-radius);
+            box-shadow: var(--lg-shadow), var(--lg-inner), 0 0 0 .5px var(--lg-edge-soft);
+            transition: transform .35s var(--lg-ease), box-shadow .35s var(--lg-ease), border-color .35s ease, background .35s ease;
+        }
+        /* curved-glass highlight + pointer-following reflection */
+        .class-card::after, .testimonial-card::after, .event-card::after, .stat::after, .contact-form::after {
+            content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+            background:
+                radial-gradient(420px circle at var(--mx, 30%) var(--my, -20%), rgba(255, 255, 255, .55), transparent 45%),
+                linear-gradient(180deg, rgba(255, 255, 255, .35) 0%, rgba(255, 255, 255, 0) 38%);
+            opacity: .65; transition: opacity .35s ease;
+            mix-blend-mode: soft-light;
+        }
+        @media (hover: hover) {
+            .class-card:hover, .testimonial-card:hover, .event-card:hover {
+                transform: translateY(-4px);
+                border-color: rgba(255, 255, 255, .95);
+                box-shadow: var(--lg-shadow-hover), var(--lg-inner), 0 0 0 .5px rgba(120, 110, 160, .2);
+            }
+            .class-card:hover::after, .testimonial-card:hover::after, .event-card:hover::after { opacity: 1; }
+        }
+
+        /* ---------- Floating glass navigation capsule ---------- */
+        nav {
+            top: 14px; left: 50%; right: auto; width: min(1180px, calc(100% - 28px)); transform: translateX(-50%);
+            height: 62px; padding: 0 10px 0 22px; border-radius: 999px;
+            background: linear-gradient(160deg, rgba(255, 255, 255, .62), rgba(255, 255, 255, .42));
+            -webkit-backdrop-filter: blur(22px) saturate(180%); backdrop-filter: blur(22px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, .7); border-bottom: 1px solid rgba(255, 255, 255, .7);
+            box-shadow: 0 10px 34px -12px rgba(60, 45, 120, .22), inset 0 1px 0 rgba(255, 255, 255, .95), 0 0 0 .5px rgba(120, 110, 160, .14);
+            transition: background .4s ease, box-shadow .4s ease, backdrop-filter .4s ease, -webkit-backdrop-filter .4s ease;
+        }
+        nav.lg-scrolled {
+            background: linear-gradient(160deg, rgba(255, 255, 255, .86), rgba(255, 255, 255, .72));
+            -webkit-backdrop-filter: blur(34px) saturate(190%); backdrop-filter: blur(34px) saturate(190%);
+            box-shadow: 0 14px 40px -12px rgba(60, 45, 120, .28), inset 0 1px 0 rgba(255, 255, 255, 1), 0 0 0 .5px rgba(120, 110, 160, .18);
+        }
+        .nav-links { gap: 4px; position: relative; }
+        .nav-links a {
+            display: inline-block; padding: 8px 14px; border-radius: 999px; color: var(--lg-ink-soft);
+            transition: color .25s ease, background .25s ease, box-shadow .25s ease;
+        }
+        .nav-links a:hover { color: var(--lg-ink); background: rgba(255, 255, 255, .55); }
+        .nav-links a.lg-active {
+            color: var(--lg-ink); font-weight: 600;
+            background: linear-gradient(180deg, rgba(255, 255, 255, .95), rgba(255, 255, 255, .7));
+            box-shadow: 0 2px 10px -2px rgba(60, 45, 120, .18), inset 0 1px 0 #fff, 0 0 0 .5px rgba(120, 110, 160, .18);
+        }
+        .nav-cta {
+            padding: .62rem 1.25rem; border-radius: 999px; color: #fff;
+            background: linear-gradient(180deg, #34304a 0%, #1d1b28 100%);
+            box-shadow: 0 6px 18px -6px rgba(29, 27, 40, .55), inset 0 1px 0 rgba(255, 255, 255, .22);
+            transition: transform .25s var(--lg-ease), box-shadow .25s ease, filter .25s ease;
+        }
+        .nav-cta:hover { background: linear-gradient(180deg, #3d3857 0%, #23202f 100%); transform: translateY(-1px); }
+
+        .lg-menu-btn { display: none; }
+        @media (max-width: 768px) {
+            nav { height: 56px; top: 10px; width: calc(100% - 20px); padding: 0 6px 0 16px; }
+            .lg-menu-btn {
+                display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin-left: 6px;
+                border-radius: 999px; border: 1px solid rgba(255, 255, 255, .8); cursor: pointer; color: var(--lg-ink);
+                background: linear-gradient(180deg, rgba(255, 255, 255, .9), rgba(255, 255, 255, .65));
+                box-shadow: 0 4px 12px -4px rgba(60, 45, 120, .2), inset 0 1px 0 #fff;
+            }
+            .lg-menu-btn span, .lg-menu-btn span::before, .lg-menu-btn span::after {
+                display: block; width: 16px; height: 2px; border-radius: 2px; background: currentColor; position: relative; transition: transform .3s var(--lg-ease), background .2s;
+            }
+            .lg-menu-btn span::before, .lg-menu-btn span::after { content: ''; position: absolute; left: 0; }
+            .lg-menu-btn span::before { top: -5px; }
+            .lg-menu-btn span::after { top: 5px; }
+            nav.lg-open .lg-menu-btn span { background: transparent; }
+            nav.lg-open .lg-menu-btn span::before { transform: translateY(5px) rotate(45deg); }
+            nav.lg-open .lg-menu-btn span::after { transform: translateY(-5px) rotate(-45deg); }
+            nav .nav-cta { margin-left: auto; padding: .55rem .95rem; font-size: .8rem; white-space: nowrap; flex: 0 0 auto; }
+            .nav-logo { min-width: 0; }
+            .nav-logo .studio-name { font-size: .95rem; line-height: 1.08; letter-spacing: -.3px; }
+            .nav-logo .studio-location { display: none; }
+            nav.lg-open .nav-links {
+                display: flex; flex-direction: column; gap: 2px; position: absolute; top: calc(100% + 10px); left: 0; right: 0;
+                padding: 10px; list-style: none; border-radius: 26px;
+                background: linear-gradient(160deg, rgba(255, 255, 255, .94), rgba(255, 255, 255, .84));
+                -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
+                border: 1px solid rgba(255, 255, 255, .85);
+                box-shadow: 0 20px 40px -14px rgba(60, 45, 120, .3), inset 0 1px 0 #fff;
+                animation: lg-sheet .32s var(--lg-ease) both;
+            }
+            nav.lg-open .nav-links a { display: block; padding: 13px 16px; font-size: 1rem; }
+        }
+        @keyframes lg-sheet { from { opacity: 0; transform: translateY(-8px) scale(.98); } to { opacity: 1; transform: none; } }
+
+        /* ---------- Hero: ambient light + floating glass ---------- */
+        .hero::before {
+            top: 8%; right: 6%; width: 340px; height: 340px; border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .95), rgba(230, 224, 247, .55) 40%, rgba(207, 197, 238, .25) 70%, transparent 72%);
+            box-shadow: inset 0 0 40px rgba(255, 255, 255, .6);
+            filter: blur(.5px);
+            animation: lg-float 14s ease-in-out infinite alternate;
+        }
+        .hero::after {
+            content: ''; position: absolute; left: 7%; bottom: 14%; width: 190px; height: 190px; border-radius: 50%; pointer-events: none;
+            background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .9), rgba(225, 236, 249, .6) 45%, rgba(245, 234, 219, .3) 70%, transparent 72%);
+            animation: lg-float 18s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes lg-float { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-18px, 22px, 0); } }
+        .hero > :not(.hero-brush):not(.hero-drop) { position: relative; z-index: 1; }
+        .hero-brush, .hero-drop { z-index: 3; }
+        .hero h1 { color: var(--lg-ink); letter-spacing: -2px; }
+        .hero p { color: var(--lg-ink-soft); }
+        .hero-tag, .hero-location {
+            background: linear-gradient(180deg, rgba(255, 255, 255, .85), rgba(255, 255, 255, .6));
+            -webkit-backdrop-filter: blur(16px) saturate(170%); backdrop-filter: blur(16px) saturate(170%);
+            border: 1px solid rgba(255, 255, 255, .85); border-radius: 999px;
+            box-shadow: 0 4px 16px -6px rgba(60, 45, 120, .18), inset 0 1px 0 #fff;
+        }
+        .hero-tag { color: #9a5f3a; }
+        .hero-location { display: inline-block; padding: .4rem 1rem; }
+        .hero-location a { color: var(--lg-ink-soft) !important; }
+
+        /* ---------- Premium glass buttons ---------- */
+        .btn-primary, .btn-secondary, .btn-highlight, .form-submit, .contact-btn, .story-cta {
+            position: relative; isolation: isolate;
+            transition: transform .25s var(--lg-ease), box-shadow .3s ease, background .3s ease, border-color .3s ease, filter .25s ease;
+        }
+        .btn-primary, .form-submit, .story-cta {
+            color: #fff; border: 1px solid rgba(255, 255, 255, .14);
+            background: linear-gradient(180deg, #3a3552 0%, #24212f 55%, #1b1924 100%);
+            box-shadow: 0 10px 24px -10px rgba(29, 27, 40, .65), inset 0 1px 0 rgba(255, 255, 255, .28), inset 0 -1px 0 rgba(0, 0, 0, .25);
+        }
+        .btn-secondary {
+            color: var(--lg-ink);
+            background: linear-gradient(180deg, rgba(255, 255, 255, .78), rgba(255, 255, 255, .5));
+            -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%);
+            border: 1px solid rgba(255, 255, 255, .9);
+            box-shadow: 0 8px 22px -10px rgba(60, 45, 120, .3), inset 0 1px 0 #fff, 0 0 0 .5px rgba(120, 110, 160, .2);
+        }
+        .btn-highlight {
+            color: #fff; border: 1px solid rgba(255, 255, 255, .35);
+            background: linear-gradient(180deg, #e0a37c 0%, #c8845a 55%, #b8724b 100%);
+            box-shadow: 0 10px 24px -10px rgba(184, 114, 75, .7), inset 0 1px 0 rgba(255, 255, 255, .45), inset 0 -1px 0 rgba(0, 0, 0, .12);
+        }
+        /* glossy top sheen on solid glass buttons */
+        .btn-primary::before, .btn-highlight::before, .form-submit::before, .story-cta::before {
+            content: ''; position: absolute; inset: 1px 1px 50% 1px; border-radius: inherit; z-index: -1; pointer-events: none;
+            background: linear-gradient(180deg, rgba(255, 255, 255, .22), rgba(255, 255, 255, 0));
+        }
+        @media (hover: hover) {
+            .btn-primary:hover, .btn-secondary:hover, .btn-highlight:hover, .form-submit:hover, .contact-btn:hover, .story-cta:hover { transform: translateY(-2px) scale(1.015); }
+            .btn-primary:hover, .form-submit:hover, .story-cta:hover { background: linear-gradient(180deg, #443e60 0%, #2a2637 55%, #1f1c29 100%); }
+            .btn-secondary:hover { background: linear-gradient(180deg, rgba(255, 255, 255, .95), rgba(255, 255, 255, .7)); }
+            .btn-highlight:hover { filter: brightness(1.05); }
+        }
+        .btn-primary:active, .btn-secondary:active, .btn-highlight:active, .form-submit:active, .contact-btn:active, .nav-cta:active, .story-cta:active, .lg-menu-btn:active {
+            transform: scale(.97); transition-duration: .08s;
+        }
+        .contact-btn.whatsapp {
+            border: 1px solid rgba(255, 255, 255, .35);
+            background: linear-gradient(180deg, #3ddc7e 0%, #25c065 60%, #1fae5a 100%);
+            box-shadow: 0 10px 24px -12px rgba(31, 174, 90, .7), inset 0 1px 0 rgba(255, 255, 255, .45);
+        }
+
+        /* ---------- Section typography ---------- */
+        .section-title { color: var(--lg-ink); letter-spacing: -1.2px; }
+        .section-sub { color: var(--lg-ink-soft); }
+        .section-tag { color: #9a5f3a; }
+
+        /* ---------- Class photos: artwork on a floating dark glass stage ---------- */
+        .classphotos {
+            margin: 3rem auto; width: min(1320px, calc(100% - 32px)); border-radius: 36px;
+            background: linear-gradient(160deg, #26232f 0%, #1a1822 55%, #201c2b 100%);
+            border: 1px solid rgba(255, 255, 255, .08);
+            box-shadow: 0 30px 70px -30px rgba(30, 20, 60, .55), inset 0 1px 0 rgba(255, 255, 255, .1);
+        }
+        .classphotos .section-sub { color: rgba(255, 255, 255, .62); }
+        .photo-item { border-radius: 18px; }
+        .photo-item::after {
+            /* thin glass rim, never blurs the artwork */
+            content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14), inset 0 1px 0 rgba(255, 255, 255, .3);
+        }
+        .photo-item { transition: transform .4s var(--lg-ease), box-shadow .4s ease; }
+        @media (hover: hover) { .photo-item:hover { transform: translateY(-4px); box-shadow: 0 18px 36px -14px rgba(0, 0, 0, .6); } }
+        .photo-overlay { background: linear-gradient(transparent, rgba(16, 14, 24, .72)); }
+
+        /* ---------- Stats as glass tiles ---------- */
+        .stats { background: transparent; gap: 1.2rem; padding: 2rem 5% 1rem; }
+        .stat { padding: 1.6rem 1.8rem; min-width: 200px; }
+        .stat-num { color: var(--lg-ink); }
+        .stat-num span { color: #9a5f3a; }
+        .stat-label { color: var(--lg-ink-soft); }
+
+        /* ---------- About ---------- */
+        .about > .gallery-item {
+            padding: 10px; background: var(--lg-fill-strong); border: 1px solid rgba(255, 255, 255, .85);
+            box-shadow: var(--lg-shadow), var(--lg-inner); border-radius: 30px;
+        }
+        .about > .gallery-item img { border-radius: 22px; }
+        .badge {
+            background: linear-gradient(180deg, rgba(255, 255, 255, .85), rgba(255, 255, 255, .58));
+            border: 1px solid rgba(255, 255, 255, .9); color: var(--lg-ink-soft); border-radius: 999px;
+            box-shadow: 0 3px 10px -4px rgba(60, 45, 120, .18), inset 0 1px 0 #fff;
+            transition: transform .25s var(--lg-ease);
+        }
+        @media (hover: hover) { .badge:hover { transform: translateY(-2px); } }
+
+        /* ---------- Gallery: floating glass frames around artwork ---------- */
+        .gallery-grid .gallery-item {
+            padding: 8px; background: var(--lg-fill-strong) !important;
+            border: 1px solid rgba(255, 255, 255, .85); border-radius: 26px;
+            box-shadow: var(--lg-shadow), var(--lg-inner);
+            transition: transform .4s var(--lg-ease), box-shadow .4s ease;
+        }
+        .gallery-grid .gallery-item img { border-radius: 19px; }
+        @media (hover: hover) {
+            .gallery-grid .gallery-item:hover { transform: translateY(-4px); box-shadow: var(--lg-shadow-hover), var(--lg-inner); }
+        }
+        .gallery-label {
+            left: 18px; bottom: 18px; border-radius: 999px; color: var(--lg-ink);
+            background: linear-gradient(180deg, rgba(255, 255, 255, .9), rgba(255, 255, 255, .72));
+            -webkit-backdrop-filter: blur(12px) saturate(170%); backdrop-filter: blur(12px) saturate(170%);
+            border: 1px solid rgba(255, 255, 255, .9); box-shadow: 0 4px 14px -6px rgba(0, 0, 0, .3), inset 0 1px 0 #fff;
+        }
+        .gallery-label:empty { display: none; }
+
+        /* ---------- Classes ---------- */
+        .classes-notice { border-left: 1px solid var(--lg-edge); border-radius: 20px; color: var(--lg-ink-soft); }
+        .classes-notice::before { content: ''; position: absolute; left: 14px; top: 14px; bottom: 14px; width: 3px; border-radius: 3px; background: linear-gradient(180deg, #e0a37c, #b8a6ee); }
+        .classes-notice { padding-left: 2rem; }
+        .class-card { border-radius: 26px; }
+        .class-card h3 { color: var(--lg-ink); }
+        .class-card p { color: var(--lg-ink-soft); }
+        .class-icon { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 4px 12px -6px rgba(60, 45, 120, .25); }
+        .class-card.easter {
+            border: 1px dashed rgba(200, 132, 90, .55);
+            background: linear-gradient(155deg, rgba(255, 249, 245, .85), rgba(255, 243, 235, .6));
+        }
+        .class-age, .watch-badge { border-radius: 999px; color: #9a5f3a; }
+
+        /* ---------- Testimonials ---------- */
+        .testimonial-card { border-radius: 26px; }
+        .testimonial-text { color: var(--lg-ink-soft); }
+        .author-avatar { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 3px 10px -4px rgba(60, 45, 120, .25); }
+
+        /* ---------- Contact form as a glass panel ---------- */
+        .contact-form { padding: 1.8rem; border-radius: 28px; }
+        .contact-form > * { position: relative; z-index: 1; }
+        .form-group label { color: var(--lg-ink-soft); }
+        .form-group input, .form-group select, .form-group textarea {
+            background: linear-gradient(180deg, rgba(255, 255, 255, .82), rgba(255, 255, 255, .62));
+            border: 1px solid rgba(120, 110, 160, .2); border-radius: 14px; color: var(--lg-ink);
+            box-shadow: inset 0 1px 2px rgba(40, 30, 80, .06), 0 1px 0 rgba(255, 255, 255, .8);
+            transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
+        }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: #8a879a; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            background: #fff; border-color: rgba(110, 88, 220, .55);
+            box-shadow: 0 0 0 4px rgba(110, 88, 220, .15), inset 0 1px 2px rgba(40, 30, 80, .05);
+        }
+        .form-group input:user-invalid, .form-group select:user-invalid {
+            border-color: rgba(214, 69, 69, .7); box-shadow: 0 0 0 4px rgba(214, 69, 69, .12);
+        }
+
+        /* ---------- Footer ---------- */
+        footer {
+            background: transparent; color: var(--lg-ink-soft);
+            margin: 2rem auto 1.4rem; width: min(1180px, calc(100% - 28px)); border-radius: 999px; padding: 1.3rem 5%;
+            background: linear-gradient(160deg, rgba(255, 255, 255, .7), rgba(255, 255, 255, .5));
+            border: 1px solid rgba(255, 255, 255, .8); box-shadow: var(--lg-shadow), inset 0 1px 0 #fff;
+        }
+        @media (max-width: 768px) { footer { border-radius: 26px; } }
+
+        /* ---------- Cookie banner + preferences as glass ---------- */
+        #cookie-consent, .cc-modal-card {
+            background: linear-gradient(160deg, rgba(255, 255, 255, .92), rgba(255, 255, 255, .8)) !important;
+            -webkit-backdrop-filter: blur(28px) saturate(180%); backdrop-filter: blur(28px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, .9) !important; border-radius: 24px !important;
+            box-shadow: 0 24px 60px -20px rgba(40, 30, 80, .4), inset 0 1px 0 #fff !important;
+        }
+        .cc-modal { background: rgba(30, 25, 50, .32) !important; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+        .cc-modal:not([hidden]) .cc-modal-card { animation: lg-pop .35s var(--lg-ease) both; }
+        @keyframes lg-pop { from { opacity: 0; transform: translateY(10px) scale(.97); } to { opacity: 1; transform: none; } }
+        .cc-opt { background: rgba(255, 255, 255, .55); border-color: rgba(120, 110, 160, .14) !important; border-radius: 16px !important; }
+        #cookie-consent button, .cc-modal-btns button { border-radius: 999px !important; }
+
+        /* ---------- Accessibility ---------- */
+        :focus-visible { outline: 3px solid var(--lg-focus); outline-offset: 3px; }
+        .form-group input:focus-visible, .form-group select:focus-visible, .form-group textarea:focus-visible { outline: none; }
+
+        /* ---------- Mobile: lighter glass for performance ---------- */
+        @media (max-width: 768px) {
+            :root { --lg-blur: blur(14px) saturate(160%); }
+            body::before { animation: none; }
+            .class-card, .testimonial-card, .stat, .contact-form { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--lg-fill-strong); }
+            .classphotos { width: calc(100% - 16px); border-radius: 28px; margin: 2rem auto; }
+            .hero::before { width: 200px; height: 200px; right: -40px; top: 12%; }
+            .hero::after { width: 120px; height: 120px; left: -20px; }
+            .stat { min-width: 0; flex: 1 1 calc(50% - 1.2rem); padding: 1.2rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            body::before, .hero::before, .hero::after { animation: none; }
+            .nav-links, nav.lg-open .nav-links, .cc-modal-card { animation: none !important; }
+        }
+    </style>
+
 </head>
 
 <body>
@@ -1009,6 +1375,353 @@
             <a href="#gallery" class="btn-secondary">View My Work</a>
         </div>
     </section>
+
+
+    <!-- Landing animation: a brush paints a stroke under the title on page load (original design) -->
+    <style>
+        .hero h1{position:relative;isolation:isolate}
+        .hero-stroke{position:absolute;left:-9%;width:118%;top:52%;height:66%;z-index:-1;pointer-events:none;overflow:visible}
+        .hero-stroke path{fill:none;stroke:url(#heroGrad);stroke-width:26;stroke-linecap:round;stroke-linejoin:round;opacity:.55}
+        .hero-brush{position:absolute;left:0;top:0;width:150px;height:44px;margin:-22px 0 0 -150px;transform-origin:150px 22px;pointer-events:none;z-index:3;opacity:0;will-change:transform,opacity}
+        .hero-brush svg{width:100%;height:100%;overflow:visible}
+        .hero-drop{position:absolute;width:12px;height:12px;border-radius:50%;pointer-events:none;z-index:3;opacity:0}
+        .hero.anim-ready .hero-tag,.hero.anim-ready h1,.hero.anim-ready .hero-location,.hero.anim-ready > p,.hero.anim-ready .hero-btns{opacity:0;transform:translateY(18px)}
+        .hero.anim-in .hero-tag,.hero.anim-in h1,.hero.anim-in .hero-location,.hero.anim-in > p,.hero.anim-in .hero-btns{opacity:1;transform:none;transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+        .hero.anim-in h1{transition-delay:.15s}
+        .hero.anim-in .hero-location{transition-delay:1.9s}
+        .hero.anim-in > p{transition-delay:2.05s}
+        .hero.anim-in .hero-btns{transition-delay:2.2s}
+        @media (max-width:768px){.hero-brush{width:110px;height:32px;margin:-16px 0 0 -110px;transform-origin:110px 16px}.hero-stroke{top:56%}}
+    </style>
+    <script>
+        (function () {
+            var hero = document.querySelector('.hero');
+            var h1 = hero && hero.querySelector('h1');
+            if (!hero || !h1) return;
+            var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var NS = 'http://www.w3.org/2000/svg';
+
+            // Paint stroke behind the title (decorative).
+            var svg = document.createElementNS(NS, 'svg');
+            svg.setAttribute('class', 'hero-stroke');
+            svg.setAttribute('viewBox', '0 0 1000 200');
+            svg.setAttribute('preserveAspectRatio', 'none');
+            svg.setAttribute('aria-hidden', 'true');
+            svg.innerHTML =
+                '<defs><linearGradient id="heroGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1000" y2="0">' +
+                '<stop offset="0" stop-color="#ff6b6b"/><stop offset=".3" stop-color="#ffd166"/>' +
+                '<stop offset=".55" stop-color="#3ec7c2"/><stop offset=".8" stop-color="#7b5cff"/>' +
+                '<stop offset="1" stop-color="#ff8fab"/></linearGradient></defs>' +
+                '<path pathLength="1000" d="M 20 150 C 180 40, 320 190, 500 115 S 800 45, 985 105"/>';
+            h1.appendChild(svg);
+            var path = svg.querySelector('path');
+
+            if (reduce) return; // stroke shown fully, no movement, text visible
+
+            path.style.strokeDasharray = '1000';
+            path.style.strokeDashoffset = '1000';
+            hero.classList.add('anim-ready');
+
+            // The brush that does the painting.
+            var brush = document.createElement('div');
+            brush.className = 'hero-brush';
+            brush.setAttribute('aria-hidden', 'true');
+            brush.innerHTML =
+                '<svg viewBox="-150 -22 150 44"><path class="hb-tip" fill="#ff6b6b" d="M0 0 C -6 -9 -26 -13 -40 -10 L -40 10 C -26 13 -6 9 0 0 Z"/>' +
+                '<rect x="-64" y="-11" width="25" height="22" rx="3" fill="#c9ccd1"/><rect x="-64" y="-11" width="25" height="5" rx="2" fill="#eef0f3"/>' +
+                '<path d="M -64 -8 L -142 -5 Q -150 0 -142 5 L -64 8 Z" fill="#b5653a"/></svg>';
+            hero.appendChild(brush);
+            var tip = brush.querySelector('.hb-tip');
+
+            var drops = ['#ff6b6b', '#ffd166', '#3ec7c2', '#7b5cff', '#ff8fab'].map(function (c) {
+                var d = document.createElement('span');
+                d.className = 'hero-drop';
+                d.style.background = c;
+                d.setAttribute('aria-hidden', 'true');
+                hero.appendChild(d);
+                return d;
+            });
+
+            var tipColours = ['#ff6b6b', '#ffd166', '#3ec7c2', '#7b5cff', '#ff8fab'];
+            var L = path.getTotalLength();
+            function screenPoint(d) {
+                var p = path.getPointAtLength(d);
+                var pt = svg.createSVGPoint(); pt.x = p.x; pt.y = p.y;
+                var s = pt.matrixTransform(path.getScreenCTM());
+                var hr = hero.getBoundingClientRect();
+                return { x: s.x - hr.left, y: s.y - hr.top };
+            }
+            function ease(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
+            var DUR = 2000, start = null;
+            function frame(now) {
+                if (start === null) start = now;
+                var t = Math.min(1, (now - start) / DUR);
+                var e = ease(t);
+                path.style.strokeDashoffset = (1000 * (1 - e)).toFixed(1);
+                var d = e * L;
+                var a = screenPoint(Math.max(0, d - 2)), b = screenPoint(Math.min(L, d + 2)), p = screenPoint(d);
+                var ang = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+                brush.style.opacity = Math.min(1, t / 0.08).toFixed(2);
+                brush.style.transform = 'translate(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px) rotate(' + ang.toFixed(1) + 'deg)';
+                tip.setAttribute('fill', tipColours[Math.min(4, Math.floor(e * 5))]);
+                if (t < 1) { requestAnimationFrame(frame); return; }
+                finish(p, ang);
+            }
+
+            // At the end the brush lifts away and flicks a few paint drops.
+            function finish(p, ang) {
+                brush.style.transition = 'transform .7s cubic-bezier(.4,0,.2,1), opacity .7s ease';
+                brush.style.transform = 'translate(' + (p.x + 60).toFixed(1) + 'px,' + (p.y - 70).toFixed(1) + 'px) rotate(' + (ang - 35).toFixed(1) + 'deg)';
+                brush.style.opacity = '0';
+                drops.forEach(function (dr, i) {
+                    var ax = (i - 2) * 26 + 10, ay = -40 - (i % 2) * 28;
+                    dr.style.left = p.x + 'px'; dr.style.top = p.y + 'px';
+                    dr.style.transform = 'translate(-50%,-50%) scale(.4)';
+                    dr.style.opacity = '1';
+                    requestAnimationFrame(function () {
+                        dr.style.transition = 'transform .9s cubic-bezier(.2,.8,.2,1), opacity .9s ease ' + (0.35 + i * 0.05) + 's';
+                        dr.style.transform = 'translate(calc(-50% + ' + ax + 'px), calc(-50% + ' + ay + 'px)) scale(' + (0.7 + (i % 3) * 0.25) + ')';
+                        dr.style.opacity = '0';
+                    });
+                });
+                setTimeout(function () { brush.remove(); drops.forEach(function (d) { d.remove(); }); }, 2000);
+            }
+
+            requestAnimationFrame(function () {
+                hero.classList.add('anim-in');
+                setTimeout(function () { requestAnimationFrame(frame); }, 450);
+            });
+        })();
+    </script>
+
+    <!-- Scroll story: a paintbrush paints across the screen as you scroll (original design) -->
+    <style>
+        .story{position:relative;height:420vh;background:#1a1a1a;padding:0}
+        .story-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
+        .story-wipe{position:absolute;inset:0;background:#f3eee6;clip-path:circle(0% at 50% 50%)}
+        .story-svg{position:absolute;inset:0;width:100%;height:100%}
+        .story-trail{fill:none;stroke:url(#storyGrad);stroke-width:30;stroke-linecap:round;stroke-linejoin:round;opacity:.8}
+        .story-ring{fill:none;stroke:rgba(26,26,26,.25);stroke-width:2;opacity:0}
+        .story-drops{position:absolute;inset:0;pointer-events:none}
+        .story-drop{position:absolute;width:var(--s,22px);height:var(--s,22px)}
+        .story-drop i{display:block;width:100%;height:100%;background:var(--c);border-radius:50% 50% 50% 0;transform:rotate(-45deg);animation:story-bob var(--d,6s) ease-in-out infinite alternate}
+        @keyframes story-bob{from{translate:0 -10px}to{translate:0 12px}}
+        .story-scene{position:absolute;max-width:min(46vw,640px);opacity:0;pointer-events:none}
+        .story-scene.on{pointer-events:auto}
+        .story-scene.right{right:6%;top:24%;text-align:left}
+        .story-scene.left{left:6%;top:24%}
+        .story-tag{display:block;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;font-weight:600}
+        .story-title{margin:0;font-weight:800;text-transform:uppercase;line-height:.95;letter-spacing:-.02em;font-size:clamp(2.3rem,6.2vw,5.6rem);color:#1a1a1a;text-shadow:0 0 18px #f3eee6,0 0 8px #f3eee6,0 0 3px #f3eee6}
+        .story-sub{text-shadow:0 0 10px #f3eee6,0 0 4px #f3eee6}
+        .story-scene.dark .story-title,.story-scene.dark .story-sub{text-shadow:none}
+        .story-scene.dark .story-title{color:#fff}
+        .story-line{display:block}
+        .story-word{opacity:.18;transition:opacity .35s ease}
+        .story-word.lit{opacity:1}
+        .story-sub{margin:1.2rem 0 0;font-size:1rem;line-height:1.6;color:#555;max-width:30rem}
+        .story-scene.dark .story-sub{color:rgba(255,255,255,.7)}
+        .story-cta{display:inline-block;margin-top:1.4rem;padding:.75rem 1.4rem;border-radius:999px;background:#1a1a1a;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem}
+        .story-count{position:absolute;left:6%;bottom:5%;font-size:.8rem;letter-spacing:.2em;font-weight:600;color:rgba(255,255,255,.6)}
+        .story-count.light{color:rgba(26,26,26,.5)}
+        .story-skip{position:absolute;left:50%;bottom:5%;transform:translateX(-50%);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,.7);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
+        .story-skip.light{color:rgba(26,26,26,.6)}
+        @media (max-width:768px){
+            .story{height:360vh}
+            .story-scene,.story-scene.left,.story-scene.right{left:6%;right:6%;top:13%;max-width:none}
+            .story-trail{stroke-width:42}
+        }
+        /* Reduced motion: no pinning or animation, just the story as a normal section */
+        .story.static{height:auto;background:#f3eee6;padding:6rem 6% 4rem}
+        .story.static .story-title,.story.static .story-sub{text-shadow:none}
+        .story.static .story-sticky{position:relative;height:auto;overflow:visible;display:grid;gap:3rem}
+        .story.static .story-wipe,.story.static .story-svg,.story.static .story-drops,.story.static .story-count,.story.static .story-skip{display:none}
+        .story.static .story-scene{position:static;opacity:1;max-width:none;pointer-events:auto}
+        .story.static .story-scene.dark .story-title{color:#1a1a1a}
+        .story.static .story-scene.dark .story-sub{color:#555}
+        .story.static .story-word{opacity:1}
+    </style>
+    <section class="story" id="story" aria-label="Our approach">
+        <div class="story-sticky">
+            <div class="story-wipe"></div>
+
+            <div class="story-drops" aria-hidden="true">
+                <span class="story-drop" style="left:8%;top:18%;--c:#ff6b6b;--s:26px;--d:5s"><i></i></span>
+                <span class="story-drop" style="left:22%;top:70%;--c:#ffd166;--s:18px;--d:7s"><i></i></span>
+                <span class="story-drop" style="left:36%;top:12%;--c:#3ec7c2;--s:22px;--d:6s"><i></i></span>
+                <span class="story-drop" style="left:47%;top:82%;--c:#ff8fab;--s:16px;--d:8s"><i></i></span>
+                <span class="story-drop" style="left:58%;top:8%;--c:#7b5cff;--s:20px;--d:5.5s"><i></i></span>
+                <span class="story-drop" style="left:66%;top:64%;--c:#ffd166;--s:28px;--d:6.5s"><i></i></span>
+                <span class="story-drop" style="left:78%;top:20%;--c:#3ec7c2;--s:16px;--d:7.5s"><i></i></span>
+                <span class="story-drop" style="left:88%;top:76%;--c:#ff6b6b;--s:22px;--d:6s"><i></i></span>
+                <span class="story-drop" style="left:14%;top:44%;--c:#c3a6ff;--s:14px;--d:9s"><i></i></span>
+                <span class="story-drop" style="left:92%;top:40%;--c:#ff9f7a;--s:18px;--d:5s"><i></i></span>
+            </div>
+
+            <svg class="story-svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <defs>
+                    <linearGradient id="storyGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1600" y2="0">
+                        <stop offset="0" stop-color="#ff6b6b" />
+                        <stop offset=".3" stop-color="#ffd166" />
+                        <stop offset=".55" stop-color="#3ec7c2" />
+                        <stop offset=".8" stop-color="#7b5cff" />
+                        <stop offset="1" stop-color="#ff8fab" />
+                    </linearGradient>
+                </defs>
+                <ellipse class="story-ring" cx="690" cy="792" rx="270" ry="34" />
+                <path class="story-path story-trail"
+                    d="M -150 250 C 250 80, 450 650, 800 480 C 1150 310, 1450 150, 1350 520 C 1250 820, 650 760, 800 760" />
+                <g class="story-brush">
+                    <path class="story-bristle" fill="#ff6b6b" d="M0 0 C -10 -14 -40 -20 -62 -16 L -62 16 C -40 20 -10 14 0 0 Z" />
+                    <rect x="-98" y="-17" width="38" height="34" rx="4" fill="#c9ccd1" />
+                    <rect x="-98" y="-17" width="38" height="7" rx="3" fill="#eef0f3" />
+                    <path d="M -98 -13 L -336 -7 Q -350 0 -336 7 L -98 13 Z" fill="#b5653a" />
+                    <path d="M -100 -11 L -330 -6" stroke="#d98a5c" stroke-width="3" stroke-linecap="round" />
+                </g>
+            </svg>
+
+            <div class="story-scene right dark">
+                <span class="story-tag">The Little Picasso Art Studio</span>
+                <h2 class="story-title"><span class="story-line">Every child</span><span class="story-line">is an artist</span></h2>
+                <p class="story-sub">Small, friendly painting classes in Colindale for ages 4–10.</p>
+            </div>
+            <div class="story-scene left">
+                <span class="story-tag">Step by step</span>
+                <h2 class="story-title"><span class="story-line">Brush by brush,</span><span class="story-line">confidence grows</span></h2>
+                <p class="story-sub">Children learn real techniques, from colour mixing to brush control, at their own pace.</p>
+            </div>
+            <div class="story-scene left">
+                <span class="story-tag">Their own style</span>
+                <h2 class="story-title"><span class="story-line">Mix the colours,</span><span class="story-line">find their voice</span></h2>
+                <p class="story-sub">Watercolour, acrylic, sketching and mixed media, with every piece taken home.</p>
+            </div>
+            <div class="story-scene right">
+                <span class="story-tag">Small groups</span>
+                <h2 class="story-title"><span class="story-line">Small groups.</span><span class="story-line">Big imagination.</span></h2>
+                <a href="#classphotos" class="story-cta">See our little artists ↓</a>
+            </div>
+
+            <div class="story-count">01 / 04</div>
+            <a href="#classphotos" class="story-skip">Skip</a>
+        </div>
+    </section>
+    <script>
+        (function () {
+            var story = document.getElementById('story');
+            if (!story) return;
+            var sticky = story.querySelector('.story-sticky');
+            var svg = story.querySelector('.story-svg');
+            var path = story.querySelector('.story-path');
+            var brush = story.querySelector('.story-brush');
+            var bristle = story.querySelector('.story-bristle');
+            var wipe = story.querySelector('.story-wipe');
+            var ring = story.querySelector('.story-ring');
+            var count = story.querySelector('.story-count');
+            var skip = story.querySelector('.story-skip');
+            var drops = [].slice.call(story.querySelectorAll('.story-drop'));
+            var scenes = [].slice.call(story.querySelectorAll('.story-scene'));
+
+            // Split each headline line into word spans so words can light up one by one.
+            var sceneWords = scenes.map(function (scene) {
+                var words = [];
+                scene.querySelectorAll('.story-line').forEach(function (line) {
+                    var parts = line.textContent.trim().split(/\s+/);
+                    line.textContent = '';
+                    parts.forEach(function (w, i) {
+                        var s = document.createElement('span');
+                        s.className = 'story-word';
+                        s.textContent = w;
+                        line.appendChild(s);
+                        if (i < parts.length - 1) line.appendChild(document.createTextNode(' '));
+                        words.push(s);
+                    });
+                });
+                return words;
+            });
+
+            var L = path.getTotalLength();
+            path.style.strokeDasharray = L;
+
+            function placeBrush(d) {
+                var a = path.getPointAtLength(Math.max(0, d - 1));
+                var b = path.getPointAtLength(Math.min(L, d + 1));
+                var p = path.getPointAtLength(d);
+                var ang = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+                brush.setAttribute('transform', 'translate(' + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ') rotate(' + ang.toFixed(1) + ')');
+                return p;
+            }
+
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                story.classList.add('static');
+                return;
+            }
+
+            var colours = ['#ff6b6b', '#ffd166', '#3ec7c2', '#7b5cff'];
+            function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
+            var pt = svg.createSVGPoint();
+            var last = -1;
+
+            function update() {
+                var r = story.getBoundingClientRect();
+                var vh = window.innerHeight;
+                if (r.bottom < -vh || r.top > vh * 2) return;           // off screen: do nothing
+                var p = clamp(-r.top / Math.max(1, r.height - vh), 0, 1);
+                if (Math.abs(p - last) < 0.0005) return;
+                last = p;
+
+                // Brush paints the stroke up to its tip.
+                var d = p * L;
+                path.style.strokeDashoffset = (L - d).toFixed(1);
+                var tip = placeBrush(d);
+
+                var idx = Math.min(3, Math.floor(p * 4));
+                bristle.setAttribute('fill', colours[idx]);
+                count.textContent = '0' + (idx + 1) + ' / 04';
+
+                // Light background spreads out from the brush tip like wet paint.
+                pt.x = tip.x; pt.y = tip.y;
+                var scr = pt.matrixTransform(svg.getScreenCTM());
+                var box = sticky.getBoundingClientRect();
+                var cx = ((scr.x - box.left) / box.width * 100).toFixed(1);
+                var cy = ((scr.y - box.top) / box.height * 100).toFixed(1);
+                var rad = (clamp((p - 0.21) / 0.12, 0, 1) * 150).toFixed(1);
+                wipe.style.clipPath = 'circle(' + rad + '% at ' + cx + '% ' + cy + '%)';
+                var light = p > 0.27;
+                count.classList.toggle('light', light);
+                skip.classList.toggle('light', light);
+
+                // Paint drops float, then scatter as the light spreads.
+                var burst = clamp((p - 0.12) / 0.2, 0, 1);
+                drops.forEach(function (el, i) {
+                    var ang = (i / drops.length) * Math.PI * 2;
+                    var dist = burst * burst * 60;
+                    el.style.transform = 'translate(' + (Math.cos(ang) * dist).toFixed(1) + 'vw,' + (Math.sin(ang) * dist).toFixed(1) + 'vh)';
+                    el.style.opacity = (1 - burst).toFixed(2);
+                });
+
+                // One headline per quarter of the scroll; words light up in turn.
+                scenes.forEach(function (scene, i) {
+                    var sp = p * 4 - i;
+                    var op = 0;
+                    if (sp >= 0 && sp <= 1) op = Math.min(1, i === 0 ? 1 : sp / 0.12, i === 3 ? 1 : (1 - sp) / 0.12);
+                    if (i === 3 && sp > 1) op = 1;
+                    scene.style.opacity = op.toFixed(2);
+                    scene.style.transform = 'translateY(' + ((1 - op) * 30).toFixed(1) + 'px)';
+                    scene.classList.toggle('on', op > 0.5);
+                    var words = sceneWords[i];
+                    var lit = Math.round(clamp((sp - 0.08) / 0.5, 0, 1) * words.length);
+                    words.forEach(function (w, j) { w.classList.toggle('lit', j < lit); });
+                });
+
+                // The brush lands on a palette ring at the end.
+                ring.style.opacity = clamp((p - 0.86) / 0.1, 0, 1).toFixed(2);
+            }
+
+            function loop() { update(); requestAnimationFrame(loop); }
+            window.addEventListener('resize', function () { last = -1; });
+            requestAnimationFrame(loop);
+        })();
+    </script>
 
     <section class="classphotos" id="classphotos">
         <div class="section-header">
@@ -1529,6 +2242,282 @@
         });
     })();
 </script>
+<!-- Section animations: content fades up on scroll, a brush paints under each section title (original design) -->
+<style>
+    .paint-wrap{position:relative;display:inline-block;isolation:isolate}
+    .paint-under{position:absolute;left:-2%;width:104%;bottom:-.14em;height:.6em;z-index:-1;overflow:visible;pointer-events:none}
+    .paint-under path{fill:none;stroke:url(#paintGrad);stroke-linecap:round;stroke-linejoin:round;opacity:.55}
+    .classphotos .paint-under path{opacity:.8}
+    .paint-brush{position:absolute;left:0;top:0;width:118px;height:34px;margin:-17px 0 0 -118px;transform-origin:118px 17px;pointer-events:none;z-index:2;opacity:0}
+    .paint-brush svg{width:100%;height:100%;overflow:visible;display:block}
+    .paint-drop{position:absolute;width:10px;height:10px;border-radius:50%;pointer-events:none;z-index:2;opacity:0}
+
+    html.rv-on .rv{opacity:0}
+    html.rv-on .rv.rv-in{animation:rv-up .85s cubic-bezier(.2,.8,.2,1) var(--rv-delay,0s) both}
+    @keyframes rv-up{from{opacity:0;translate:0 26px}to{opacity:1;translate:0 0}}
+    @media (prefers-reduced-motion: reduce){html.rv-on .rv{opacity:1}html.rv-on .rv.rv-in{animation:none}}
+</style>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+        <linearGradient id="paintGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#ff6b6b" /><stop offset=".3" stop-color="#ffd166" />
+            <stop offset=".55" stop-color="#3ec7c2" /><stop offset=".8" stop-color="#7b5cff" />
+            <stop offset="1" stop-color="#ff8fab" />
+        </linearGradient>
+    </defs>
+</svg>
+<script>
+    (function () {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var hasIO = 'IntersectionObserver' in window;
+        var NS = 'http://www.w3.org/2000/svg';
+        var TIPS = ['#ff6b6b', '#ffd166', '#3ec7c2', '#7b5cff', '#ff8fab'];
+
+        /* ---------- 1. Fade-up reveal for section content ---------- */
+        var groups = [
+            '.section-header > *',
+            '.photos-grid > .photo-item',
+            '.stats > .stat',
+            '.about > .gallery-item',
+            '.about > div > p',
+            '.about-badges > .badge',
+            '.gallery-grid > .gallery-item',
+            '.classes-notice',
+            '.classes-grid > .class-card',
+            '.testimonials-grid > .testimonial-card',
+            '.contact-info > *',
+            '.contact-form'
+        ];
+        var items = [];
+        groups.forEach(function (sel) {
+            document.querySelectorAll(sel).forEach(function (el) {
+                if (el.closest('.hero, .story') || el.classList.contains('rv')) return;
+                var sibs = [].filter.call(el.parentElement.children, function (c) { return c.matches(sel); });
+                var i = sibs.indexOf(el);
+                el.style.setProperty('--rv-delay', ((i % 5) * 0.09).toFixed(2) + 's');
+                el.classList.add('rv');
+                items.push(el);
+            });
+        });
+        if (!reduce && hasIO && items.length) {
+            document.documentElement.classList.add('rv-on');
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) { e.target.classList.add('rv-in'); io.unobserve(e.target); }
+                });
+            }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+            items.forEach(function (el) { io.observe(el); });
+        }
+
+        /* ---------- 2. Brush paints a stroke under each section title ---------- */
+        var titles = [].slice.call(document.querySelectorAll('.section-title')).filter(function (h) {
+            return !h.closest('.hero, .story');
+        });
+
+        function build(h) {
+            var wrap = document.createElement('span');
+            wrap.className = 'paint-wrap';
+            while (h.firstChild) wrap.appendChild(h.firstChild);
+            h.appendChild(wrap);
+            var svg = document.createElementNS(NS, 'svg');
+            svg.setAttribute('class', 'paint-under');
+            svg.setAttribute('aria-hidden', 'true');
+            var path = document.createElementNS(NS, 'path');
+            svg.appendChild(path);
+            wrap.appendChild(svg);
+            return { h: h, wrap: wrap, svg: svg, path: path, done: false, L: 0 };
+        }
+
+        // Draw the wave in real pixels so the stroke never looks squashed.
+        function layout(t) {
+            // Fit the stroke to the last line of the title (titles can wrap).
+            try {
+                var rg = document.createRange();
+                rg.setStartBefore(t.wrap.firstChild);
+                rg.setEndBefore(t.svg);
+                var rects = [].filter.call(rg.getClientRects(), function (q) { return q.width > 1 && q.height > 4; });
+                if (rects.length) {
+                    var bottom = Math.max.apply(null, rects.map(function (q) { return q.bottom; }));
+                    var line = rects.filter(function (q) { return Math.abs(q.bottom - bottom) < 6; });
+                    var left = Math.min.apply(null, line.map(function (q) { return q.left; }));
+                    var right = Math.max.apply(null, line.map(function (q) { return q.right; }));
+                    var wr0 = t.wrap.getBoundingClientRect();
+                    var extra = (right - left) * 0.03;
+                    t.svg.style.left = (left - wr0.left - extra).toFixed(1) + 'px';
+                    t.svg.style.width = (right - left + 2 * extra).toFixed(1) + 'px';
+                }
+            } catch (err) { /* keep CSS defaults */ }
+            var r = t.svg.getBoundingClientRect();
+            var W = Math.max(40, r.width), H = Math.max(10, r.height);
+            t.svg.setAttribute('viewBox', '0 0 ' + W.toFixed(1) + ' ' + H.toFixed(1));
+            var fs = parseFloat(getComputedStyle(t.h).fontSize) || 32;
+            var sw = Math.max(7, Math.min(15, fs * 0.24));
+            var pad = sw / 2 + 1;
+            var y = function (f) { return (pad + f * (H - 2 * pad)).toFixed(1); };
+            var x = function (f) { return (pad + f * (W - 2 * pad)).toFixed(1); };
+            t.path.setAttribute('d', 'M ' + x(0) + ' ' + y(.75) + ' C ' + x(.18) + ' ' + y(.05) + ', ' + x(.32) + ' ' + y(1) + ', ' + x(.5) + ' ' + y(.55) +
+                ' S ' + x(.8) + ' ' + y(.1) + ', ' + x(1) + ' ' + y(.5));
+            t.path.style.strokeWidth = sw.toFixed(1) + 'px';
+            t.L = t.path.getTotalLength();
+            t.path.style.strokeDasharray = t.L.toFixed(1);
+            if (t.done || reduce) t.path.style.strokeDashoffset = '0';
+        }
+
+        function pointIn(t, d) {
+            var p = t.path.getPointAtLength(d);
+            var pt = t.svg.createSVGPoint(); pt.x = p.x; pt.y = p.y;
+            var s = pt.matrixTransform(t.path.getScreenCTM());
+            var wr = t.wrap.getBoundingClientRect();
+            return { x: s.x - wr.left, y: s.y - wr.top };
+        }
+        function ease(k) { return k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
+
+        function paint(t) {
+            var brush = document.createElement('span');
+            brush.className = 'paint-brush';
+            brush.setAttribute('aria-hidden', 'true');
+            brush.innerHTML =
+                '<svg viewBox="-118 -17 118 34"><path class="pb-tip" fill="#ff6b6b" d="M0 0 C -5 -7 -20 -10 -31 -8 L -31 8 C -20 10 -5 7 0 0 Z"/>' +
+                '<rect x="-50" y="-9" width="20" height="18" rx="2.5" fill="#c9ccd1"/><rect x="-50" y="-9" width="20" height="4" rx="2" fill="#eef0f3"/>' +
+                '<path d="M -50 -6 L -112 -4 Q -118 0 -112 4 L -50 6 Z" fill="#b5653a"/></svg>';
+            t.wrap.appendChild(brush);
+            var tip = brush.querySelector('.pb-tip');
+            var dur = Math.max(1100, Math.min(1800, t.L * 2.4)), start = null;
+
+            function frame(now) {
+                if (start === null) start = now;
+                var k = Math.min(1, (now - start) / dur), e = ease(k), d = e * t.L;
+                t.path.style.strokeDashoffset = (t.L * (1 - e)).toFixed(1);
+                var a = pointIn(t, Math.max(0, d - 2)), b = pointIn(t, Math.min(t.L, d + 2)), p = pointIn(t, d);
+                var ang = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+                brush.style.opacity = Math.min(1, k / 0.08).toFixed(2);
+                brush.style.transform = 'translate(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px) rotate(' + ang.toFixed(1) + 'deg)';
+                tip.setAttribute('fill', TIPS[Math.min(4, Math.floor(e * 5))]);
+                if (k < 1) { requestAnimationFrame(frame); return; }
+                t.done = true;
+                // lift the brush away and flick a few drops
+                brush.style.transition = 'transform .6s cubic-bezier(.4,0,.2,1), opacity .6s ease';
+                brush.style.transform = 'translate(' + (p.x + 45).toFixed(1) + 'px,' + (p.y - 50).toFixed(1) + 'px) rotate(' + (ang - 35).toFixed(1) + 'deg)';
+                brush.style.opacity = '0';
+                TIPS.slice(0, 4).forEach(function (c, i) {
+                    var dr = document.createElement('span');
+                    dr.className = 'paint-drop'; dr.style.background = c;
+                    dr.setAttribute('aria-hidden', 'true');
+                    dr.style.left = p.x + 'px'; dr.style.top = p.y + 'px';
+                    dr.style.transform = 'translate(-50%,-50%) scale(.4)'; dr.style.opacity = '1';
+                    t.wrap.appendChild(dr);
+                    requestAnimationFrame(function () {
+                        dr.style.transition = 'transform .8s cubic-bezier(.2,.8,.2,1), opacity .8s ease ' + (0.3 + i * 0.05) + 's';
+                        dr.style.transform = 'translate(calc(-50% + ' + ((i - 1.5) * 20) + 'px), calc(-50% - ' + (30 + (i % 2) * 22) + 'px)) scale(' + (0.7 + (i % 3) * 0.2) + ')';
+                        dr.style.opacity = '0';
+                        setTimeout(function () { dr.remove(); }, 1800);
+                    });
+                });
+                setTimeout(function () { brush.remove(); }, 900);
+            }
+            requestAnimationFrame(frame);
+        }
+
+        var tlist = titles.map(build);
+        tlist.forEach(function (t) {
+            layout(t);
+            if (!reduce && hasIO) t.path.style.strokeDashoffset = t.L.toFixed(1);
+        });
+
+        if (!reduce && hasIO) {
+            var tio = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (!e.isIntersecting) return;
+                    var t = tlist.filter(function (x) { return x.h === e.target; })[0];
+                    tio.unobserve(e.target);
+                    if (t && !t.done) setTimeout(function () { layout(t); paint(t); }, 350);
+                });
+            }, { rootMargin: '0px 0px -15% 0px', threshold: 0.6 });
+            tlist.forEach(function (t) { tio.observe(t.h); });
+        }
+
+        var rt;
+        window.addEventListener('resize', function () {
+            clearTimeout(rt);
+            rt = setTimeout(function () { tlist.forEach(function (t) { if (t.done || reduce || !hasIO) layout(t); }); }, 150);
+        });
+    })();
+</script>
+
+<!-- Liquid Glass interactions: nav state, active section, mobile menu, card reflections -->
+<script>
+    (function () {
+        var nav = document.querySelector('nav');
+        if (!nav) return;
+        var links = [].slice.call(nav.querySelectorAll('.nav-links a[href^="#"]'));
+        var list = nav.querySelector('.nav-links');
+
+        // 1. Nav becomes more opaque and blurred once the page scrolls.
+        function onScroll() { nav.classList.toggle('lg-scrolled', window.scrollY > 24); }
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // 2. Highlight the link for the section in view.
+        var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+        if ('IntersectionObserver' in window) {
+            var seen = new Map();
+            var spy = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) { seen.set(e.target, e.isIntersecting ? e.intersectionRatio : 0); });
+                var best = null, bestR = 0;
+                seen.forEach(function (r, el) { if (r > bestR) { bestR = r; best = el; } });
+                links.forEach(function (a, i) {
+                    var on = best && targets[i] === best;
+                    a.classList.toggle('lg-active', !!on);
+                    if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+                });
+            }, { rootMargin: '-35% 0px -55% 0px', threshold: [0, .01, .5, 1] });
+            targets.forEach(function (t) { if (t) spy.observe(t); });
+        }
+
+        // 3. Mobile menu: a glass sheet that drops down from the capsule.
+        if (list) {
+            if (!list.id) list.id = 'site-menu';
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'lg-menu-btn';
+            btn.setAttribute('aria-label', 'Open menu');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.setAttribute('aria-controls', list.id);
+            btn.innerHTML = '<span aria-hidden="true"></span>';
+            nav.appendChild(btn);
+            function setOpen(open) {
+                nav.classList.toggle('lg-open', open);
+                btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+            }
+            btn.addEventListener('click', function () { setOpen(!nav.classList.contains('lg-open')); });
+            links.forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && nav.classList.contains('lg-open')) { setOpen(false); btn.focus(); } });
+            document.addEventListener('click', function (e) { if (nav.classList.contains('lg-open') && !nav.contains(e.target)) setOpen(false); });
+            window.addEventListener('resize', function () { if (window.innerWidth > 768) setOpen(false); });
+        }
+
+        // 4. Reflection on glass cards follows the pointer (desktop, motion allowed).
+        var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (fine && !still) {
+            document.querySelectorAll('.class-card, .testimonial-card, .event-card, .stat, .contact-form').forEach(function (card) {
+                var raf = 0;
+                card.addEventListener('pointermove', function (e) {
+                    if (raf) return;
+                    raf = requestAnimationFrame(function () {
+                        raf = 0;
+                        var r = card.getBoundingClientRect();
+                        card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+                        card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+                    });
+                });
+                card.addEventListener('pointerleave', function () { card.style.removeProperty('--mx'); card.style.removeProperty('--my'); });
+            });
+        }
+    })();
+</script>
+
 <!-- Lenis smooth scroll — darkroom.engineering (https://github.com/darkroomengineering/lenis) -->
 <style>
     html.lenis, html.lenis body { height: auto; }
