@@ -81,8 +81,8 @@
 
         .photos-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.2rem;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
         }
 
         .photo-item {
@@ -94,7 +94,7 @@
         }
 
         .photo-item.portrait {
-            aspect-ratio: 3/4;
+            aspect-ratio: 1 / 1;
         }
 
         .photo-item.landscape {
@@ -140,6 +140,12 @@
             font-size: 0.82rem;
             font-weight: 600;
             letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 1024px) {
+            .photos-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
@@ -1011,81 +1017,106 @@
             <p class="section-sub">A peek inside our classes — where creativity comes alive!</p>
         </div>
         <div class="photos-grid">
-
-            <!-- Portrait photos -->
+            <!-- Class photos, best first -->
             <div class="photo-item portrait">
-                <img src="/img1.JPG" alt="Art class photo 01" />
-                <div class="photo-overlay"><span>Mother's Day Special 15 March 2026 🎨</span></div>
+                <img src="/Images8.JPG" alt="Child holding a Halloween haunted-house painting" loading="lazy" />
+                <div class="photo-overlay"><span>Creepy Halloween masterpiece 🎃</span></div>
             </div>
-
             <div class="photo-item portrait">
-                <img src="/img2.JPG" alt="Art class photo 02" />
-                <div class="photo-overlay"><span>Little hands, big art ✨</span></div>
+                <img src="/Images5.JPG" alt="Child holding a detailed sea-turtle painting" loading="lazy" />
+                <div class="photo-overlay"><span>Splish-splash turtle 🐢</span></div>
             </div>
-
             <div class="photo-item portrait">
-                <img src="/img3.JPG" alt="Art class photo 03" />
-                <div class="photo-overlay"><span>Every stroke counts 🖌️</span></div>
+                <img src="/Images11.JPG" alt="Child holding an anime-style character portrait" loading="lazy" />
+                <div class="photo-overlay"><span>Anime art star 🎨</span></div>
             </div>
-
             <div class="photo-item portrait">
-                <img src="/img4.JPG" alt="Art class photo 04" />
-                <div class="photo-overlay"><span>Proud little Picassos 🌟</span></div>
+                <img src="/img7.JPG" alt="Child holding a sunset heron painting" loading="lazy" />
+                <div class="photo-overlay"><span>Golden-hour heron 🌅</span></div>
             </div>
-
             <div class="photo-item portrait">
-                <img src="/img5.JPG" alt="Art class photo 05" />
-                <div class="photo-overlay"><span>Proud little Picassos 🌟</span></div>
+                <img src="/img5.JPG" alt="A Mother's Day painting with a hand-painted wooden heart" loading="lazy" />
+                <div class="photo-overlay"><span>Handmade with love 💝</span></div>
             </div>
-
             <div class="photo-item portrait">
-                <img src="/img6.JPG" alt="Art class photo 06" />
-                <div class="photo-overlay"><span>Future artists 🎭</span></div>
+                <img src="/Images10.JPG" alt="Child holding a moonlit lighthouse and sailboat painting" loading="lazy" />
+                <div class="photo-overlay"><span>Lighthouse by moonlight 🌙</span></div>
             </div>
-
             <div class="photo-item portrait">
-                <img src="/img7.JPG" alt="Art class photo 07" />
-                <div class="photo-overlay"><span>Future artists 🎭</span></div>
+                <img src="/Images6.JPG" alt="Child holding a sunset painting with flying birds" loading="lazy" />
+                <div class="photo-overlay"><span>Sunset birds in flight 🕊️</span></div>
             </div>
-
             <div class="photo-item portrait">
-                <img src="/img8.JPG" alt="Art class photo 08" />
-                <div class="photo-overlay"><span>Future artists 🎭</span></div>
+                <img src="/img9.JPG" alt="Child holding a sailboat painting" loading="lazy" />
+                <div class="photo-overlay"><span>Sailing the swirly sea ⛵</span></div>
             </div>
-
             <div class="photo-item portrait">
-                <img src="/img9.JPG" alt="Art class photo 09" />
-                <div class="photo-overlay"><span>From a 4 year old 🎭</span></div>
+                <img src="/Images7.JPG" alt="Child holding a still-life painting of lemons in a vase" loading="lazy" />
+                <div class="photo-overlay"><span>Still life with lemons 🍋</span></div>
             </div>
-
             <div class="photo-item portrait">
-                <img src="/img10.JPG" alt="Art class photo 10" />
-                <div class="photo-overlay"><span>Future artists 🎭</span></div>
+                <img src="/Images9.JPG" alt="Child holding a watercolour of a girl with balloons" loading="lazy" />
+                <div class="photo-overlay"><span>Balloons in the breeze 🎈</span></div>
             </div>
-
             <div class="photo-item portrait">
-                <img src="/img11.JPG" alt="Art class photo 11" />
-                <div class="photo-overlay"><span>Future artists 🎭</span></div>
+                <img src="/img3.JPG" alt="Child holding a dolphins-at-sunset painting" loading="lazy" />
+                <div class="photo-overlay"><span>Dolphins at sunset 🐬</span></div>
             </div>
-
             <div class="photo-item portrait">
-                <img src="/img12.JPG" alt="Art class photo 12" />
-                <div class="photo-overlay"><span>Future artists 🎭</span></div>
+                <img src="/Images2.JPG" alt="Child holding an autumn tree lakeside painting" loading="lazy" />
+                <div class="photo-overlay"><span>Autumn by the lake 🍁</span></div>
             </div>
-
             <div class="photo-item portrait">
-                <img src="/img13.JPG" alt="Art class photo 13" />
-                <div class="photo-overlay"><span>Future artists 🎭</span></div>
+                <img src="/img1.JPG" alt="Child holding a Mother's Day hearts painting and a hand-painted wooden heart" loading="lazy" />
+                <div class="photo-overlay"><span>Happy Mother's Day 💕</span></div>
             </div>
-
             <div class="photo-item portrait">
-                <img src="/img14.JPG" alt="Art class photo 14" />
-                <div class="photo-overlay"><span>Future artists 🎭</span></div>
+                <img src="/Images12.JPG" alt="Child holding a campervan and beach painting" loading="lazy" />
+                <div class="photo-overlay"><span>Campervan by the sea 🚐</span></div>
             </div>
-
             <div class="photo-item portrait">
-                <img src="/img15.JPG" alt="Art class photo 14" />
-                <div class="photo-overlay"><span>Future artists 🎭</span></div>
+                <img src="/img2.JPG" alt="Child holding an underwater whale painting" loading="lazy" />
+                <div class="photo-overlay"><span>Under the sea 🐋</span></div>
+            </div>
+            <div class="photo-item portrait">
+                <img src="/Images1.JPG" alt="Three children holding still-life pencil sketches" loading="lazy" />
+                <div class="photo-overlay"><span>Still-life sketching ✏️</span></div>
+            </div>
+            <div class="photo-item portrait">
+                <img src="/img8.JPG" alt="Two children holding meadow paintings" loading="lazy" />
+                <div class="photo-overlay"><span>Through the meadow 🌼</span></div>
+            </div>
+            <div class="photo-item portrait">
+                <img src="/Images4.JPG" alt="Three children holding geometric still-life paintings" loading="lazy" />
+                <div class="photo-overlay"><span>Colour-blocked still life ☕</span></div>
+            </div>
+            <div class="photo-item portrait">
+                <img src="/img11.JPG" alt="Child holding a sunset bay painting" loading="lazy" />
+                <div class="photo-overlay"><span>Sunset over the bay 🌄</span></div>
+            </div>
+            <div class="photo-item portrait">
+                <img src="/img10.JPG" alt="Child painting a tropical toucan" loading="lazy" />
+                <div class="photo-overlay"><span>Tropical toucan in progress 🦜</span></div>
+            </div>
+            <div class="photo-item portrait">
+                <img src="/img12.JPG" alt="Child painting a red parrot" loading="lazy" />
+                <div class="photo-overlay"><span>Bringing a parrot to life 🎨</span></div>
+            </div>
+            <div class="photo-item portrait">
+                <img src="/img15.JPG" alt="Two children painting at the studio table" loading="lazy" />
+                <div class="photo-overlay"><span>Creativity in session ✨</span></div>
+            </div>
+            <div class="photo-item portrait">
+                <img src="/img6.JPG" alt="Child holding a lighthouse painting" loading="lazy" />
+                <div class="photo-overlay"><span>By the lighthouse 🗼</span></div>
+            </div>
+            <div class="photo-item portrait">
+                <img src="/img4.JPG" alt="Child holding a caterpillar fingerprint artwork" loading="lazy" />
+                <div class="photo-overlay"><span>Big things start small 🐛</span></div>
+            </div>
+            <div class="photo-item portrait">
+                <img src="/img14.JPG" alt="Child holding a meadow painting" loading="lazy" />
+                <div class="photo-overlay"><span>Meadow dreams 🌸</span></div>
             </div>
         </div>
     </section>
@@ -1319,46 +1350,27 @@
         </div>
         <form class="contact-form" onsubmit="handleSubmit(event)">
             <div class="form-row">
-                <div class="form-group"><label>Parent's Name</label><input type="text" id="parentName"
-                        placeholder="Your full name" required /></div>
-                <div class="form-group"><label>Child's Name</label><input type="text" id="childName"
-                        placeholder="Child's name" required /></div>
-            </div>
-            <div class="form-row">
+                <div class="form-group"><label>Your Name</label><input type="text" id="name"
+                        placeholder="Your name" required /></div>
                 <div class="form-group">
-                    <label>Child's Age</label>
-                    <select id="childAge" required>
-                        <option value="">Select age</option>
-                        <option>4 years</option>
-                        <option>5 years</option>
-                        <option>6 years</option>
-                        <option>7 years</option>
-                        <option>8 years</option>
-                        <option>9 years</option>
-                        <option>10 years</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Preferred Month</label>
-                    <select id="classTime">
-                        <option>May</option>
-                        <option>June</option>
-                        <option>July</option>
-                        <option>Private 1-on-1 (flexible)</option>
-                        <option>School Term Holiday Class</option>
+                    <label>Preferred Class Category</label>
+                    <select id="category" required>
+                        <option value="">Select a category</option>
+                        <option>Term-time classes</option>
+                        <option>Holiday classes</option>
+                        <option>Weekend classes</option>
+                        <option>Private 1-on-1 tutoring</option>
                     </select>
                 </div>
             </div>
-            <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" placeholder="+44 74560 74560" />
-            </div>
-            <div class="form-group"><label>Message (optional)</label><textarea id="message" rows="3"
-                    placeholder="Any questions or special requirements?"></textarea></div>
+            <div class="form-group"><label>Message</label><textarea id="message" rows="3"
+                    placeholder="How can we help? (optional)"></textarea></div>
             <button type="submit" class="form-submit">Send Enquiry →</button>
         </form>
     </section>
 
     <footer>
-        <p>© 2026 The Little Picasso Art Studio · London · Made with ❤️ for young artists</p>
+        <p>© 2026 The Little Picasso Art Studio · London · Made with ❤️ for young artists · <a href="#" onclick="openCookiePrefs();return false;" style="color:inherit;text-decoration:underline">Cookie settings</a></p>
     </footer>
 
 
@@ -1370,13 +1382,11 @@
     <script>
         function handleSubmit(e) {
             e.preventDefault();
-            const parentName = document.getElementById('parentName').value || 'Parent Name';
-            const childName = document.getElementById('childName').value || 'Child Name';
-            const childAge = document.getElementById('childAge').value || 'Age';
-            const classTime = document.getElementById('classTime').value || 'Date';
+            const name = document.getElementById('name').value || 'there';
+            const category = document.getElementById('category').value || 'Not specified';
             const message = document.getElementById('message').value || '';
 
-            const text = encodeURIComponent(`📞 +44 7456 519097\n\nHi! I'd like to book a class at The Little Picasso Art Studio.\n\nParent Name: ${parentName}\nChild Name: ${childName}\nChild Age: ${childAge}\nPreferred Date: ${classTime}\n${message ? 'Notes: ' + message : ''}`);
+            const text = encodeURIComponent(`Hi! I'd like to enquire about a class at The Little Picasso Art Studio.\n\nName: ${name}\nPreferred class category: ${category}\n${message ? 'Message: ' + message : ''}`);
 
             window.open(`https://wa.me/447456519097?text=${text}`, '_blank');
 
@@ -1418,7 +1428,7 @@
 <script defer src="/_vercel/insights/script.js"></script>
 <!-- Vercel Speed Insights (cookieless) -->
 <script defer src="/_vercel/speed-insights/script.js"></script>
-<!-- Cookie consent banner (gates Google Analytics) -->
+<!-- Cookie consent banner + preferences (gates Google Analytics) -->
 <style>
     #cookie-consent{position:fixed;left:16px;right:16px;bottom:16px;z-index:9999;max-width:520px;margin:0 auto;background:#fff;color:#333;border:1px solid #e5e5e5;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.15);padding:16px 18px;font-family:inherit;font-size:14px;line-height:1.5}
     #cookie-consent p{margin:0 0 12px}
@@ -1426,32 +1436,135 @@
     #cookie-consent .cc-btns{display:flex;gap:10px;justify-content:flex-end}
     #cookie-consent button{cursor:pointer;border:0;border-radius:8px;padding:8px 16px;font-size:14px;font-weight:600}
     #cc-accept{background:#c2410c;color:#fff}
-    #cc-decline{background:#f0f0f0;color:#333}
+    #cc-reject{background:#f0f0f0;color:#333}
     @media(max-width:480px){#cookie-consent .cc-btns{flex-direction:column}#cookie-consent button{width:100%}}
+
+    .cc-modal{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px;font-family:inherit}
+    .cc-modal[hidden]{display:none}
+    .cc-modal-card{background:#fff;color:#333;max-width:460px;width:100%;border-radius:14px;padding:20px;max-height:85vh;overflow:auto;box-shadow:0 10px 40px rgba(0,0,0,.25);font-size:14px;line-height:1.5}
+    .cc-modal-card h3{margin:0 0 6px;font-size:18px}
+    .cc-modal-card>p{margin:0 0 14px;color:#666}
+    .cc-opt{border:1px solid #eee;border-radius:10px;padding:12px;margin-bottom:10px}
+    .cc-opt-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0}
+    .cc-opt-title{font-weight:700}
+    .cc-opt-state{font-size:12px;color:#2b8a3e;font-weight:600}
+    .cc-opt-desc{margin:6px 0 0;color:#666;font-size:13px}
+    .cc-switch{width:20px;height:20px;cursor:pointer;flex:0 0 auto}
+    .cc-modal-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:4px}
+    .cc-modal-btns button{cursor:pointer;border:0;border-radius:8px;padding:8px 14px;font-size:14px;font-weight:600}
+    .cc-btn-ghost{background:#f0f0f0;color:#333}
+    .cc-btn-primary{background:#c2410c;color:#fff}
+    @media(max-width:480px){.cc-modal-btns{flex-direction:column}.cc-modal-btns button{width:100%}}
 </style>
 <div id="cookie-consent" role="dialog" aria-live="polite" aria-label="Cookie consent" hidden>
     <p>We use one Google Analytics cookie to understand how visitors use the site. Basic visitor counts are always collected without cookies. Is that okay?</p>
     <div class="cc-btns">
-        <button id="cc-decline" type="button">Decline</button>
+        <button id="cc-reject" type="button">Reject</button>
         <button id="cc-accept" type="button">Accept</button>
+    </div>
+</div>
+<div id="cookie-prefs" class="cc-modal" role="dialog" aria-modal="true" aria-label="Cookie preferences" hidden>
+    <div class="cc-modal-card" data-lenis-prevent>
+        <h3>Cookie preferences</h3>
+        <p>Choose which cookies you're happy for us to use. Essential items are always on.</p>
+
+        <div class="cc-opt">
+            <div class="cc-opt-head"><span class="cc-opt-title">Strictly necessary</span><span class="cc-opt-state">Always on</span></div>
+            <p class="cc-opt-desc">Needed for the site to work and to remember your cookie choice. No tracking.</p>
+        </div>
+
+        <div class="cc-opt">
+            <label class="cc-opt-head" for="pref-analytics"><span class="cc-opt-title">Analytics cookies</span><input type="checkbox" id="pref-analytics" class="cc-switch" /></label>
+            <p class="cc-opt-desc">One Google Analytics cookie that helps us understand how visitors use the site.</p>
+        </div>
+
+        <div class="cc-opt">
+            <div class="cc-opt-head"><span class="cc-opt-title">Anonymous usage metrics</span><span class="cc-opt-state">Cookieless</span></div>
+            <p class="cc-opt-desc">Basic visitor counts and page-speed data, collected without any cookies.</p>
+        </div>
+
+        <div class="cc-modal-btns">
+            <button id="cc-reject-all" type="button" class="cc-btn-ghost">Reject all</button>
+            <button id="cc-save" type="button" class="cc-btn-ghost">Save choices</button>
+            <button id="cc-accept-all" type="button" class="cc-btn-primary">Accept all</button>
+        </div>
     </div>
 </div>
 <script>
     (function () {
         var banner = document.getElementById('cookie-consent');
+        var modal = document.getElementById('cookie-prefs');
+        var analytics = document.getElementById('pref-analytics');
+
+        function apply(allowAnalytics) {
+            try {
+                localStorage.setItem('cookieConsent', allowAnalytics ? 'granted' : 'denied');
+                localStorage.setItem('cookiePrefs', JSON.stringify({ analytics: !!allowAnalytics }));
+            } catch (e) {}
+            if (allowAnalytics && typeof loadGoogleAnalytics === 'function') loadGoogleAnalytics();
+        }
+        function closeAll() { banner.hidden = true; modal.hidden = true; }
+        function openPrefs() {
+            var prefs = {};
+            try { prefs = JSON.parse(localStorage.getItem('cookiePrefs') || '{}'); } catch (e) {}
+            analytics.checked = !!prefs.analytics;
+            banner.hidden = true;
+            modal.hidden = false;
+        }
+        // expose so a "Cookie settings" link can reopen the panel anytime
+        window.openCookiePrefs = openPrefs;
+
         var choice = null;
         try { choice = localStorage.getItem('cookieConsent'); } catch (e) {}
         if (!choice) { banner.hidden = false; }
-        document.getElementById('cc-accept').addEventListener('click', function () {
-            try { localStorage.setItem('cookieConsent', 'granted'); } catch (e) {}
-            banner.hidden = true;
-            if (typeof loadGoogleAnalytics === 'function') loadGoogleAnalytics();
-        });
-        document.getElementById('cc-decline').addEventListener('click', function () {
-            try { localStorage.setItem('cookieConsent', 'denied'); } catch (e) {}
-            banner.hidden = true;
+
+        document.getElementById('cc-accept').addEventListener('click', function () { apply(true); closeAll(); });
+        document.getElementById('cc-reject').addEventListener('click', openPrefs);
+        document.getElementById('cc-accept-all').addEventListener('click', function () { analytics.checked = true; apply(true); closeAll(); });
+        document.getElementById('cc-reject-all').addEventListener('click', function () { analytics.checked = false; apply(false); closeAll(); });
+        document.getElementById('cc-save').addEventListener('click', function () { apply(analytics.checked); closeAll(); });
+        // click outside the card: close the panel; reshow the banner if no choice made yet
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) { modal.hidden = true; var c = null; try { c = localStorage.getItem('cookieConsent'); } catch (x) {} if (!c) banner.hidden = false; }
         });
     })();
+</script>
+<!-- Lenis smooth scroll — darkroom.engineering (https://github.com/darkroomengineering/lenis) -->
+<style>
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: clip; }
+    .lenis.lenis-smooth iframe { pointer-events: none; }
+</style>
+<script type="module">
+    // Smooth scrolling is a motion effect, so honour "reduce motion": when the
+    // visitor prefers reduced motion we skip Lenis and the browser's normal
+    // (and native-anchor) scrolling is used instead.
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        import('https://cdn.jsdelivr.net/npm/lenis@1.3.27/+esm')
+            .then(function (mod) {
+                var Lenis = mod.default;
+                var lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+                window.lenis = lenis;
+
+                function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+                requestAnimationFrame(raf);
+
+                // In-page links scroll smoothly and stop clear of the 70px fixed nav.
+                document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+                    if (a.hasAttribute('onclick')) return; // leave "Cookie settings" etc. alone
+                    a.addEventListener('click', function (e) {
+                        var href = a.getAttribute('href');
+                        e.preventDefault();
+                        if (href === '#') { lenis.scrollTo(0); return; }
+                        var target = document.querySelector(href);
+                        if (target) lenis.scrollTo(target, { offset: -80 });
+                    });
+                });
+            })
+            .catch(function () { /* CDN unavailable: native scrolling still works */ });
+    }
 </script>
 </body>
 
